@@ -80,6 +80,16 @@ void Game::Render() const
 		bricks[i].Draw();
 	}
 
+	// TODO #6 - If no bricks remain, pause ball and display victory text with R to reset
+	if (bricks.empty())
+	{
+		Console::SetCursorPosition(WINDOW_WIDTH / 2 - 5, WINDOW_HEIGHT / 2);
+		std::cout << "Victory! Press R for another round";
+	}
+
+	// TODO #7 - If ball touches bottom of window, pause ball and display defeat text with R to reset
+	
+
 	Console::Lock(false);
 }
 
@@ -104,10 +114,6 @@ void Game::CheckCollision()
 	// TODO #6 - If no bricks remain, pause ball and display victory text with R to reset
 
 
-	/*if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_velocity + ball.y_position))
-	{
-		ball.y_velocity *= -1;
-	}*/
-
 	// TODO #7 - If ball touches bottom of window, pause ball and display defeat text with R to reset
+	
 }
