@@ -32,6 +32,9 @@ void Game::Reset()
 		brick.color = ConsoleColor::DarkGreen;
 		bricks.push_back(brick);
 	}
+
+	//game start instructions
+	//commit
 }
 
 void Game::ResetBall()
@@ -120,23 +123,33 @@ void Game::CheckCollision()
 	{
 		if (bricks[i].Contains(ball.x_position + ball.x_velocity, ball.y_position + ball.y_velocity))
 		{
-			ball.x_velocity *= -1;
+			//reverse ball direction
+			if (ball.x_position < bricks[i].x_position || ball.x_position > bricks[i].x_position + bricks[i].width - 1)
+				ball.x_velocity *= -1; //had my x_velocity and y_velocity mixed up, this fixed where my ball was morphing through
+			//the bricks instead of "hitting" them
+			else
+				ball.y_velocity *= -1;
 
 			// TODO #5 - If the ball hits the same brick 3 times (color == black), remove it from the vector
 			if (bricks[i].color == ConsoleColor::DarkGreen)
+			{
 				bricks[i].color = ConsoleColor::Green;
+			}
 			else if (bricks[i].color == ConsoleColor::Green)
+			{
 				bricks[i].color = ConsoleColor::Blue;
-			else if (bricks[i].color == ConsoleColor::Blue)	
+			}
+			else if (bricks[i].color == ConsoleColor::Blue)
 			{
 				bricks.erase(bricks.begin() + i);
-				i--; //hoping this adjustment will help with the crash issue
+				i--;
 			}
 			break;
 		}
-		if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_position + ball.y_velocity))
-		{
-			ball.y_velocity *= -1;
-		}
+			//reverse ball direction if it hits the paddle
+			if (paddle.Contains(ball.x_position + ball.x_velocity, ball.y_position + ball.y_velocity))
+			{
+				ball.y_velocity *= -1;
+			}
 	}
 }
